@@ -1,62 +1,0 @@
-§
-
-     ЕµjН  г                   уp   — d Z ddlZddlZddlZddlZddlmZ ddlm	Z	m
-Z
- d„ Zedk    r e¦   «          dS dS )a  
-Instruction listing of a captured proto (research aid):
-
-    python -m obfuscators.ironbrew1.listing <src> <dump.json> CAP [FROM TO]   (from deobf/)
-
-Prints each instruction's fields (the tables the dispatch loop fetches) and
-its handler source (handler.py), one line per statement.
-й    N)Ъdevirt)ЪreachЪopcode_localc                  уH  ‡‡‡‡‡— t          t          j        d         d¬¦  «                             ¦   «         Љt	          j        t          t          j        d         ¦  «        ¦  «        Љt
-          t          j        d         ¦  «        Љt          t          j        ¦  «        dk    rt
-          t          j        d         ¦  «        ndЉt          t          j        ¦  «        dk    rt
-          t          j        d         ¦  «        ndЉ€€€€€fd	„} t          j	        | ¦  «         d S )
-Nй   zlatin-1)Ъencodingй   й   й   й   i Кљ;c            
-      у|  •— t          j        ‰‰¦  «        } t          j        | ‰t          j        ¦   «         ¦  «        }|                     ¦   «          |j        }t          j        |¦  «        }|j        }|                     |d         d         d         d         |j	        ¦  «        }t          |¦  «        \  }}|j        }i }	t          d„ |j
-        D ¦   «         ¦  «        }
-t          ‰t          ‰|
-¦  «        dz   ¦  «        D ђ]№}t          j        |j        ¦  «        }||j        |<   	 |d |…         D ]}
-|                     |
-|¦  «         Њ|                     |¦  «        j        |         }n+# t*          $ r}t-          d||fz  ¦  «         Y d }~ЊЋd }~ww xY w|                     |¦  «        }t1          |t           j        ¦  «        rFd                     d„ t7          |j
-                             ¦   «         d	„ ¬
-¦  «        D ¦   «         ¦  «        nt          j        |¦  «        }||	vrUg }t=          ||d …         |||¦  «         t?          j         d|dњ¦  «         !                    d
-¦  «        }d„ |D ¦   «         |	|<   |	|         }t-          d|||d d…         d                     |¦  «        d d…         fz  ¦  «         ђЊ»d S )Nr   ЪvaluesЪexprc              3   уD   K  — | ]}t          |t          ¦  «        Ї|V — Њd S )N)Ъ
-isinstanceЪint)Ъ.0Ъks     ъJC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\ironbrew1\listing.pyъ	<genexpr>z#main.<locals>.go.<locals>.<genexpr>$   s1   и и Ђ Р8Р8ђaҐZ°µ3С%7Ф%7Р8ђР8Р8Р8Р8Р8Р8у    r   z
-%5d  ?? %sъ c              3   у‚   K  — | ]:\  }}t          |t          j        ¦  «        °|›d t          j        |¦  «        ›ќV — Њ;dS )ъ=N)r   ЪDЪLTableЪfmt_any)r   r   Ъvs      r   r   z#main.<locals>.go.<locals>.<genexpr>0   s]   и и Ђ р >р >№dёaАЭ%/°µ1ґ8С%<Ф%<р>ЁЁЁ­A¬I°a©L¬LЁLР9р >р >р >р >р >р >r   c                 у,   — t          | d         ¦  «        S )Nr   )Ъrepr)Ъkvs    r   ъ<lambda>z"main.<locals>.go.<locals>.<lambda>0   s   Ђ ХkoРprРstФpuСkvФkvЂ r   )ЪkeyЪAstStatBlock)ЪtypeЪbodyъ
-c                 у¬   — g | ]Q}|                      ¦   «         Ї|                      ¦   «                              d ¦  «        °=|                      ¦   «         ‘ЊRS )zis = is + 1)ЪstripЪ
-startswith)r   Ъts     r   ъ
-<listcomp>z$main.<locals>.go.<locals>.<listcomp>6   sI   Ђ РmРmРmЁ1°q·wІw±yґyРmИПКЙМЧI]ТI]Р^kСIlФIlРmQџWљW™YњYРmРmРmr   z%5d  op %-4s %-40s | %sй(   z ; й    )"r   ЪProgramЪProtoLifterЪUpListЪ
-initial_stateЪvmЪ
-LiftInterpЪ	loop_bodyЪevalЪcscoper   Ъpc_declЪmaxЪhЪrangeЪminЪScopeЪiscopeЪvarsЪ	exec_stmtЪlookupЪ	ExceptionЪprintЪgetr   r   ЪjoinЪsortedЪitemsr   r   ЪluauastЪrenderЪsplit)ЪprogЪlfr3   Ъitr&   ЪcodeЪopkeyЪfirstr8   ЪcacheЪnЪpcЪscЪstЪopЪexЪinsЪfieldsЪoutЪtxtr:   ЪciЪdЪhiЪloЪsrcs                        ЂЂЂЂЂr   Ъgozmain.<locals>.go   sУ  шЂ ЭЊyaС Ф €Э
-Њ]4 ҐQ¤XЎZ¤ZС
-0Ф
-0€Ш
-ЧТСФРШ
-ЊU€Э
-Њ\"С
-Ф
-€ШЊ|€ШЏwЉwђtA”wxФ(ЁФ+ЁFФ3°RґYС?Ф?€Э# DС)Ф)‰€€uШ”*€Ш€ЭР8Р84њ6Р8С8Ф8С8Ф8€ЭќC  A™JњJЁ™NС+Ф+р 	Zс 	Z€BЭ”њС#Ф#€BШ!€BЊGђGСр
-Шv vњ,р )р )ђBШ—L’L  RС(Ф(Р(Р(Ш—Y’YuС%Ф%Ф*Ё5Ф1ђђшЭр 
-р 
-р 
-Эђl bЁ" XС-С.Ф.Р.Шђђђђшшшшр
-шшшр —(’(2‘,”,€CеAKИCХQRФQYСAZФAZрoђS—X’Xр >р >ЕfИSМUП[К[Й]М]Р`vР`vРFwСFwФFwр >с >ф >с >ф >р >Э`aФ`iРjmС`nФ`nр 
-а€€ШђЭђd566”l BЁЁsС3Ф3Р3Э”nЁnАcР%JР%JСKФKЧQТQРRVСWФWђШmРm°РmСmФmђђb‘	Шђb”	€AЭР+Ёr°2°vёcёrёcґ{АEЗJВJИqБMДMРRVРSVРRVФDWР.XСXСYФYРYСYр'	Zр 	Zs   Д(AE,Е,
-FЕ6FЖF)
-ЪopenЪsysЪargvЪreadЪjsonЪloadr   ЪlenЪbackendЪ
-run_big_stack)ra   r\   r]   r^   r_   r`   s    @@@@@r   Ъmainrk      sя   шшшшшЂ Э
-ЌsЊxЊ{ YР
-/С
-/Ф
-/Ч
-4Т
-4С
-6Ф
-6ЂCЭЊ	•$•s”x ”{С#Ф#С$Ф$ЂAЭ	ЌSЊXђaЊ[С	Ф	ЂBЭ Ґ¤™]њ]ЁQТ.Р.ЌЌSЊXђaЊ[С	Ф	Р	°AЂBЭ Ґ¤™]њ]ЁQТ.Р.ЌЌSЊXђaЊ[С	Ф	Р	°GЂBрZр Zр Zр Zр Zр Zр Zр Zр Zх@ Ф"СФРРРr   Ъ__main__)
-Ъ__doc__rf   rc   ri   rH   Ъobfuscators.ironbrew1r   r   Ъobfuscators.ironbrew1.handlerr   r   rk   Ъ__name__© r   r   ъ<module>rr      s“   ррр р ЂЂЂШ 
-Ђ
-Ђ
-Ђ
-а ЂЂЂШ ЂЂЂШ -Р -Р -Р -Р -Р -Ш =Р =Р =Р =Р =Р =Р =Р =р'р 'р 'рT €zТРШЂDЃF„FЂFЂFЂFр Рr   
