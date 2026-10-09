@@ -1,658 +1,1 @@
- 
-    њЊµjЗJ  c                   @  s  d Z ddlZddlZddlZddlZej ej eЎЎZ	ej ej e	ЎЎZ
-d„ Zd„ Zd„ Z
-d„ Zd„ Zd„ Zd	„ d
-„ d„ d„ d
-„ d„ dњZdddddddњZd„ Zd„ Zdd„Zd„ Zedkrdeѓ  dd„Zdd„Zd „ Zd!„ Zd"„ Zd#„ Zd$„ Zd%„ Zd&„ Z d'„ Z!d(„ Z"d)„ Z#dS )*ъй
-Static helper: maps every Luraph interpreter dispatch loop to its opcode
-handlers (opcode -> handler source) using luau-ast's JSON output.
 
-Usage: python obfuscators/luraph_v15/vmmap.py <protected.luau> [dispatch_index] [opcode...]
-i    Nc                 C   sЁ   t j tdt jdkrdndЎ}t || gddМ}|j dЎ 	Ў  
-Ў }|jdks0|rG|d  d	ЎrGt
-d
-t|ѓdkr>|d  	Ў nd|jd
-@   ѓ‚|j}t | dЎЎd S )NЪbinЪntъluau-ast.exeъluau-astT)Ъcapture_outputъlatin-1i    ъParse errorsъnot valid Luau (%s)i   ъluau-ast exit %#xм   яя Ъroot)ЪosЪpathЪjoinЪROOTЪnameЪ
-subprocessЪrunЪstderrЪdecodeЪstripЪ
-splitlinesЪ
-returncodeЪ
-startswithЪSyntaxErrorЪlenЪstdoutЪjsonЪloads)r
-   ъexeЪrъerrsъout) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪload_astr#      sP  
-  W  # 79 7> BF 7F %V %3 %V LV W  	 	9  " # 48 	9 	9  
-  & % & . . ; ; 	 	    S" S'+ ,- '. 'I :H 'I S 0 GJ KO GP ST GT 4Q48 9: 4; 4C 4C 4QZm 78 7C FP 7P ZQRS	S   	 	- 	 	, 	"+ 	, 	- 	.4 	5 	5 c                 C   sF   | d   dЎ\}}tt|  dЎѓ\}}tt|  dЎѓ\}}||||fS )NЪlocationъ - ъ,)ЪsplitЪmapЪint)ЪnodeъaЪbъl1ъc1ъl2ъc2) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪlocr2      sЊ      ) #( ) 	  	    # " # $   	    # " # $   	       c                 C   sf   t |ѓ\}}}}||kr| | ||… S | | |d … g| |d |…  | | d |… g }d |ЎS )Ni   ъ
-)r2   r   )Ъlinesr*   ъl1ъc1ъl2ъc2Ъparts) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪtext_ofr;   "   sМ        	 
-  
-            	         
-  % &( +, &, -/ &/  0 
-0 49 :< 4= >A ?A >A 4B 3C 
-C 
-      c                 C   sT   t | tѓr|| ѓ |  Ў D ]}t||ѓ q
-d S t | tѓr(| D ]}t||ѓ qd S d S )N)Ъ
-isinstanceЪdictЪvaluesЪwalkЪlist)r*   ъfnЪv) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyr?   r?   *   sЁ       	  	 	    		
- 
-   
- 
- 
- 		
-   
-   		
- 
-   
- 
- 
- 		c                 C   s   |   dЎdkr
-| d d S d S )NЪtypeЪAstExprLocalЪlocalr   )Ъget)Ъexpr) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ
-local_namerJ   4   s<       * * %   $ % 	%   c                   s   g ‰ ‡ fd„}t | |ѓ € S )ъ1while true do local op = ARR[PC]; if-tree ... endc              
-      s,  |   dЎdkr	d S | d }|  dЎdks|  dЎsd S | d d }t|ѓdk s/|d d d	vr1d S |d }t|d
- ѓdkr?d S |d dkrN|d
- d d }nt|d
- d ѓ}|sZd S |d
- d }|d dkrhd S t|d ѓt|d ѓ}}|rЂ|rЂ|d d dkr‚d S €  | ||||d |dd … dњЎ d S )NrD   ЪAstStatWhileЪ	conditionЪAstExprConstantBoolЪvalueЪbodyi   i    )ЪAstStatLocalЪ
-AstStatAssignr>   i   rQ   Ъvarsr   ЪAstExprIndexExprrH   ЪindexЪ	AstStatIf)r*   ЪopЪarrЪpcЪtreeъrest)rG   r   rJ   Ъappend)ъnъcondrP   ъstъopnamerB   rY   rX   )ъfound) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyzvisitzfind_dispatchers.<locals>.visit>   sX  
-    + + 	
- 
-    	
-      5 5 	=A =N FM =N 	
- 
-      ! 	
-      	! "# $ %+ , 4U U 	
- 
- 
- 
- 
- 
-	      !" " 	
- 
-    ( ( 	    !" # $* + 
- 
-   !# $* !+ ,- !. / 
-  
-  
-  
-  
- 	
- 
-   + + 	
- 
-    & ' ( *4 56 7> 5? *@ 	@ 	@  	 	!% &' !( )/ !0 4? !? 	
- 
- 	 	)  (. 7: BD NR ST NU # $% $& $& ' ((	)	)	)	))r?   )r   ъvisit) )ъfoundъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪfind_dispatchersrf   :   s8   
- 
- )))))#	 #
- # # # $ $ c                 C   s   | |k S )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>`   s   "# &' "' "' c                 C   s   | |kS )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>`   s   CD HI CI CI c                 C   s   | |kS )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>a   s   "# &' "' "' c                 C   s   | |kS )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>a   s   CD HI CI CI c                 C   s   | |kS )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>b   s   "# '( "( "( c                 C   s   | |kS )N) )ъar,   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z<lambda>b   s   DE IJ DJ DJ )Ъ	CompareLtЪ	CompareLeЪ	CompareGtЪ	CompareGeЪ	CompareEqЪ	CompareNeru   rv   rs   rt   rw   rx   c                 C  sђ   | d dks| d t vrdS | d | d }}| d }t|ѓ|kr/|d dkr/t | ||d ѓS t|ѓ|krF|d dkrFt t|  ||d ѓS dS )	ъOEvaluate `var <op> const` for a concrete opcode value; None if not such a test.rD   Ъ
-AstExprBinaryrW   NЪleftЪrightЪAstExprConstantNumberrO   )ЪOPSrJ   ЪFLIP)ъcondЪvarrO   r   ЪlrW   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ	eval_condr„   g   s    
-  ' ' +/ 04 +5 =@ +@ 	 	     & ' ' ' 
-  
-       *!" #) !* .E !E *      !( ) * 	* 	 	 	 	 	 	0	!" 	#) 	!* 	.E 	!E 	0
- 
- 
- 
- 
- 
-# 
-%& 
-'. 
-%/ 
-0 
-	0   c                 C  sє   | }	 |d dkr2t |d ѓdkr0|d d d dkr0t|d d d ||ѓdur0|d d }q|S |d dkr[t|d ||ѓ}|du rF|S |rM|d	 }q| d
-Ў}|du rXdS |}q|S )ъEFollow the if-tree for one opcode value and return the handler block.rD   ЪAstStatBlockrP   i   i    rV   rM   NЪthenbodyЪelsebody)r   r„   rG   )rZ   rЃ   rO   r*   r   Ъe) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪresolver‹   t   st   	    * * 	     ! %& & 
-+/ 06 +7 89 +: ;A +B FQ +Q 
-" #' (. #/ 01 #2 3> #? AD FK L TX X 
- # $ %& '  	 
- 
-
-    ' ' 	   + , .1 38 9 
- 
- 
- 
- 
-
-   
- ' (    ) ( )            
-  	 )i   c                 C   sX   i }t |ѓD ]#}t| d | d |ѓ}|d u rq|d }| |g |dњЎd  |Ў q|S )NrZ   rW   r$   )Ъopsr*   rЊ   )Ъranger‹   Ъ
-setdefaultr\   )ъdispr4   ъmax_opЪhandlersrW   ъblkЪkey) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪhandler_mapr•   Ќ   s°    
-    MM	   " # %) *. %/ 13 4 	    	
-    	 	 	;   *, 69 ": ": 	; <A 	B 	M JL 	M 	M 	M 	 	 c               
-   C   s&  t jd } t| ѓ}t| ddЌЏ}| Ў  dЎ}W d   ѓ q#1 s!w Y t|ѓ}tt jѓdkrWt|dѓD ]!\}}t	||ѓ}t
-d||d |d |d	 t|ѓ|d
- d f ѓ q3d S |tt jd ѓd  }td„ t jd
-d … D ѓѓ}t
-|ѓD ]}	t|d |d |	ѓ}
-t
-d|	 ѓ t
-|
-rЌt||
-ѓndѓ qsd S )Ni   ъlatin-1)Ъencodingъ
-i   ъ1dispatch %d: op=%s arr=%s pc=%s handlers=%d at %srW   rX   rY   r*   r$   c                 s   s   | ]}t |ѓV  qd S )N)r)   )ъ.0ъx) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>zmain.<locals>.<genexpr>Ґ   s,   - -     - - - - - i   rZ   ъ
----- op %dъ<none>)ЪsysЪargvr#   ЪopenЪreadr'   rf   r   Ъ	enumerater•   Ъprintr)   ЪsetЪsortedr‹   r;   )r
-   r   ъfr4   ъdispsЪiЪdъhъwantrW   ъblk) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪmainrЇ      sL      	    	 
-  ' 
-( 
-( %,-    %  $ % 	 	 %%%%%%%%%%%
- " 
-# 
-        $ &' ( 	`	`
- 
-  	 	 	 % 	& 	
- 
-
- 
-F 
-JK 
-MN 
-OS 
-MT 
-VW 
-X] 
-V^ 
-`a 
-bf 
-`g 
-il 
-mn 
-io IJ KQ IR S] I^ 
-I_
-_
-
-`
-
-`
-
-`	 	 
-	 
- 
- 
- 
- 
- 
- 
-"# 
-# 
-	$ 
-  - -  #  ( )* )+ )+  , - - - 	    88	      "# $( ") +- . 	 	      	! 	! 	 &) 7   ! " 7 /7 	8 	8 	8 88Ъ__main__)NNc                 C  sР   |   dЎ}|du r
-t|ѓ}t|ѓ|d  }g }| Ў D ]#\}}	t|d |d |ѓ}
-|
-du r.qt|
-ѓ\}}}
-}
-| |||	fЎ qt|ddЌD ]\}}}	|| }|d|… d |	 d ||d…  ||< qEd |ЎS )	ъОInsert Lua code at the start of chosen opcode handlers of one dispatch loop.
-
-    probes: {opcode: "lua code"}; returns modified source. Only single-line
-    sources (like Luraph output) are supported.
-    ъ
-Ni   rZ   rW   T)Ъreverseъ )	r'   r#   rf   Ъitemsr‹   r2   r\   r¦   r   )ъsrcъ
-disp_indexъprobesr   ъtmp_pathr4   rЄ   ъinsertsrW   Ъcodeъblkъl1ъc1Ъ_Ъs) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ
-instrumentrВ   °   s   
- 
-  
- 
-    "	 	! 	" 		
- 
-	 
- 
-	 
- * 
--. 
- . 
-	/ 
-    # # ''	 	 
- 
- 
- 
- 
-  
-"# 
-$( 
-") 
-+- 
-. 
-	    	
-     	 	 
-   	 	'   !% & 	' 	' 	'   ' 15 6 6 77	 	 
-  
-  
- 	
-      ! ! $( ( +. . 12 35 36 36 17 7 	  	 	      )ЪZЪWc              
-   C  s>  ddl }|  dЎ}t|ѓ|d  }t||ѓ}	g }
-|	 Ў D ]Y\}}|d }
-t||
-ѓ}|d | |d dЎv sId	|v sId
-|v sI|d |v sI|d |v rJq| d
-| d | d |Ў}|s[qt|
-ѓ\}}}}|
- 	||||d d | 
-dЎѓfЎ qt|
-ddЌD ]\}}}|| }|d|… d | d ||d…  ||< q|d |ЎS )ъTAppend logging after simple `REG[..]=...` handlers. make_code(op, dest_expr) -> lua.i    Nъ
-i   r*   ъ=ъ==Ъ ЪreturnЪbreakъ+=ъ-=ъ\s*(ъ\[[A-Za-z_]+\[ъ\]\])=rЊ   T)rі   ъ )
-Ъrer'   rf   r•   rµ   r;   ЪreplaceЪmatchr2   r\   Ъgroupr¦   r   )ъsrcъ
-disp_indexr   ъ	make_codeъregrY   Ъ_rer4   rЄ   ъhъinsertsr“   rB   ъblkЪtextЪmъl1ъc1ъl2ъc2r»   rА   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪinstrument_postrе   И   s|      
- 
-  
- 
- 	  	  * -.  . 	/  	   	       E
-E
-	 	  	 	 	 		 
- 
- 
-" 
-# 
-	
- 
-  
-  5 ') ,0 '0 24 5 5 	9A EI 9I 	MT X\ M\ 	   #' ' 	,. 15 ,5 :> +> 	
-
- 
- 
-P  !$ $ '8 8 ;= = @I I KO 
-P 	
-  	
-  ! " 	 	 
-   	 	E   !* +, -2 +3 45 +6 89 8B @A 8B !C D 	E 	E 	E   ' 15 6 6 77	 	 
-  
-  
- 	
-      ! ! $( ( +. . 12 35 36 36 17 7 	  	 	      c                 C  s   | d dkrdS dS )ъA(register array, pc variable) used by a dispatch loop's handlers.rY   rД   )rГ   rД   )r‚   ЪO) )ъdisp) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ
-loop_namesrк   а   s(    # $ (+ + ;  ; 1; ; c              
-   C   sЬ   dd l }t|ѓ\}}g }t|| ѓ Ў D ]X}t| |d ѓ}|d | |d dЎv s<d|v s<d|v s<|d |v s<|d	 |v r=q| d
-| d | d |Ў}	|	sNqt|d ѓ\}
-}}}
-| ||
-||d
- d |	 	dЎ|ѓfЎ q|S )Ni    r*   ъ=ъ==rЙ   rК   rЛ   ъ+=ъ-=ъ\s*(ъ\[[A-Za-z_]+\[ъ\]\])=rЊ   i   )
-rТ   rк   r•   r>   r;   rУ   rФ   r2   r\   rХ   )ъ	src_linesъdispъ	make_coderЪ   ъregrY   ъoutrB   rЮ   rЯ   ъl1ъc1ъl2ъc2) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪpost_insertsrь   е   sё           
- 
-     ) * 3 3 E	E		
-  ! #$ %+ #, - 	
- 
-  
-  5 ') ,0 '0 24 5 5 	9A EI 9I 	MT X\ M\ 	   #' ' 	,. 15 ,5 :> +> 		
- 
-
- 
-
-P 
- 
-!$ 
-$ 
-'8 
-8 
-;= 
-= 
-@I 
-I 
-KO 
-
-P 
-	
-  	
- 
- 
- 
- & 
-' 
-( 
-	 
-	 
-
- 
- 
- 	 	E   & '( ). '/ 01 '2 45 4> <= 4> @B C D 	E 	E 	E   c                   s¦   ddl }|  dЎ}g }t|ѓD ]
-}|t|||ѓ7 }qt|ddЌD ]\}}	}
-|| }|d|	… d |
- d ||	d…  ||< q d |Ў}dg‰ ‡ ‡fd„}
-| d|
-|ЎS )	ъKPost-log simple handlers in every loop and log each dispatched instruction.i    Nъ
-T)rі   ъ c                    s6   € d  d7  < |   dЎ€€ d |   dЎ|   dЎѓ S )Ni    i   i   )rХ   )rЯ   )Ъkъ	make_loop) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyzrepz"instrument_everything.<locals>.rep  sl   	
-  	 	  	 	 	     & '( )* '+ -. -7 56 -7 9: 9C AB 9C D D 	D ъSwhile true do (?:local )?([A-Za-z_]+)(?:,[A-Za-z_]+)*=([A-Za-z_]+)\[([A-Za-z_]+)\];)rТ   r'   rf   rь   r¦   r   Ъsub)ъsrcr   ъ	make_postъ	make_looprЪ   r4   ъinsertsrЄ   ъl2ъc2r»   rА   ъoutъrep) )r   ъ	make_loopъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪinstrument_everythingr  ц   sL      
- 
-  
- 
-    # $ 55	
- 	5   !& () +4 5 	5 	5 	5   ' 15 6 6 77	 	 
-  	
- 	 	
- 		
- 
- 
- 
- 
- 
- 
-! 
-! 
-$( 
-( 
-+. 
-. 
-12 
-35 
-36 
-36 
-17 
-7 
-	 
- 
-	 
-	      
- 	  DDDDDD u j lo qt u u c                   s<   d„ t | ѓD ѓ‰ i ‰‡ ‡‡fd„‰€| g ѓ d„ € Ў D ѓS )ъYFor each VM interpreter closure: (line, col of its first statement, proto variable name).c                 S   s   | Л ]}|d  ‘qS )r*   ) )ъ.0rЄ   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z#closure_entries.<locals>.<listcomp>  s(   = = = !"    = = = c                    sк   t € tѓrb€  dЎdkr|€ g }€  dЎdkrTt‡ fd„€D ѓѓrTtd„ t|ѓD ѓѓ}td„ t|ѓD ѓѓ}t|d d d ѓ\}}}}|d	 t|ѓd  d
- €||f< €  Ў D ]}€||ѓ qXd S t € t	ѓrs€ D ]}€||ѓ qid S d S )NrD   ЪAstExprFunctionrL   c                 3   s   | ]}€ |u V  qd S )N) )ъ.0rЄ   )ъn) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z0closure_entries.<locals>.walk.<locals>.<genexpr>  s,   7S 7S CD 89 => 8> 7S 7S 7S 7S 7S c                 s   s$   | ]}|  d Ўr|d s|V  qdS )ЪvarargЪargsN)rG   )ъ.0ъf) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z0closure_entries.<locals>.walk.<locals>.<genexpr>  sH   ^ ^ $% <= <K BJ <K ^ TU V\ T] ^  ^ ^ ^ ^ ^ c                 s   s"   | ]
-}t |d  ѓdkr|V  qdS )r  i   N)r   )ъ.0ъf) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z0closure_entries.<locals>.walk.<locals>.<genexpr>  sD   P P $% <? @A BH @I <J NO <O P  P P P P P rP   i    r  r   )
-r<   r=   rG   ЪanyЪnextЪreversedr2   Ъ
-_maker_paramsr>   r@   )ъnЪstackъinnerъouterъl1ъc1rї   rB   )ъ
-disp_nodesЪseenr?   )ъnъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyr?   zclosure_entries.<locals>.walk  sФ      	    !2 2 
-$ "# !$ $      !/ / 
-P47 7S 7S 7S 7S HR 7S 7S 4S 
-P ^ ^ )1 27 )8 ^ ^ ^   P P )1 27 )8 P P P   # $) *0 $1 28 $9 :; $<  =      "' (. "/ 0= >C 0D EF 0G "H IO "P      
- 
-  
-  
-
-
-
-
-       
-
-
-
-    ! 	 
-
-       
-
-		c                 S   s   | Л ]\\}}}|||f‘qS ) ) )ъ.0r‚   Ъcr   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z#closure_entries.<locals>.<listcomp>   s<   ; ; ; * $   "# &*    
- ; ; ; )rf   rµ   )r   ) )ъ
-disp_nodesr*  r?   ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪclosure_entriesr2  	  sx   = = &6 7; &< = =   	 	 
-    ; ; .2 .: .: ; ; ; c                   s>   d„ t | ѓD ѓ‰ i ‰‡ ‡‡fd„‰€| g g ѓ d„ € Ў D ѓS )б)  For each VM closure template: (line, col just after the statement that
-    stores the new closure in a local, that local's name, proto variable name).
-    Luraph builds every closure of a proto with `S, h = n, function(...) ... end`
-    inside a maker function whose second parameter is the proto.c                 S   s   | Л ]}|d  ‘qS )r*   ) )ъ.0rЄ   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z"closure_makers.<locals>.<listcomp>(  s(   = = = !"    = = = c                    sh  t € tѓr €  dЎ}|dkr|€ g }|r#| dЎr#|€ t|ѓfg }|dkr‘t‡ fd„€D ѓѓr‘td„ t|ѓD ѓѓ‰€d t|ѓk r‘|€d  }‡fd„|D ѓ}|rW|d	 nd }|r‘|d d
-kr‘t|d |d ѓD ]&\}}||u rjt	|ѓrjt
-|ѓ\}}}	}
-t	|ѓ|€ d
- d d f€|	|
-f< qj€  Ў D ]}€|||ѓ q•d S t € tѓrІ€ D ]}€|||ѓ q§d S d S )NrD   r  ЪAstStatrL   c                 3   s   | ]}€ |u V  qd S )N) )ъ.0rЄ   )ъn) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z/closure_makers.<locals>.walk.<locals>.<genexpr>2  s,   +G +G 78 ,- 12 ,2 +G +G +G +G +G c                 s   s&   | ]\}}t |d  ѓdkr|V  qdS )r  i   N)r   )ъ.0r©   ъf) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z/closure_makers.<locals>.walk.<locals>.<genexpr>3  sL   P P  $  ! #$ <? @A BH @I <J NO <O P  P P P P P i   c                    s    g | ]\}}|€ d  kr|‘qS )i   ) )ъ.0rА   rЄ   )ъoi) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z0closure_makers.<locals>.walk.<locals>.<listcomp>6  s@   > > > !% !" $% 23 79 <= 7= 2= >  > > > iяяяяrR   rS   r>   r  r   )
-r<   r=   rG   r   r   r  ЪmaxrЈ   ЪziprJ   r2   r>   r@   )ъnr$  ъstmtsЪtъcloъstrB   r‰   rї   ъl2ъc2)ъ
-disp_nodesr*  r?   )ъnъoiъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyr?   zclosure_makers.<locals>.walk+  sН      	&    
-  & & 
-$ "# !$ $   
-2 - #, - 
-2 #$ &) */ &0 "1 !2 2   # # 
-_
-(+ +G +G +G +G <F +G +G (G 
-_
-	 	P 	P 	(1 	27 	(8 	P 	P 	P 	 
- 
- 
- 
-  
-!& 
-' 
-' 
-_  !# &' !' (  > > > > ). > >  
-$& 
-0 
- 
- 
-  
-0 
-,0 
-  _! "( ) -< < _%( )+ ,2 )3 57 8@ 5A %B __!   !  ! %(  ( _-7 89 -: _03 46 07 !- !" $% ') +- 3= >? 3@ BG HJ BK LR BS TU BV W] B^ 2_ !% ') +- &. !/       
-&
-&     % & & & 
-&
-&    ! 	& 
-&
-&     % & & & 
-&
-&	&	&c                 S   s$   | Л ]\\}}\}}||||f‘qS ) ) )ъ.0r‚   r.  rЃ   ъpv) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z"closure_makers.<locals>.<listcomp>C  sH   C C C !2 !' "# %& )2 *- /1     
- C C C )rf   rµ   )r   ) )ъ
-disp_nodesr*  r?   ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪclosure_makersrR  #  s|   = = &6 7; &< = =   	 	&	&	&	&	&	&	& 	  
-         !C !C !6: !6B !6B !C !C !C c                 C  s   | d S )ъ.Identity of a local: its declaration location.r$   ) )rF   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪdecl_keyrU  F  s       c                   sT   d„ t | ѓD ѓ‰ i ‰‡ ‡‡fd„‰€| g g ѓ € Ў D ]}t|ѓ|d< qt€ Ў ѓS )бd  closure_makers() plus what the runtime capture needs: for each maker,
-    {"at": (line, col), "var": closure local, "proto": proto param name,
-     "maker": maker AstExprFunction, "vm": the VM closure AstExprFunction,
-     "captures": [maker-level local names the VM closure uses]}.
-    Only names that are not shadowed at the insertion point are returned.c                 S   s   | Л ]}|d  ‘qS )r*   ) )ъ.0rЄ   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>zmaker_info.<locals>.<listcomp>Q  s(   = = = !"    = = = c           
-         s¬  t € tѓrВ€  dЎ}|dkr|€ g }|r#| dЎr#|€ t|ѓfg }|dkrіt‡ fd„€D ѓѓrіtd„ t|ѓD ѓѓ‰€d t|ѓk rі|€d  }‡fd„|D ѓ}|rW|d	 nd }|rі|d d
-krіt|d |d ѓD ]H\}}||u rjt	|ѓrjt
-|ѓ\}}}	}
-|	|
-f€vrjt|€ ѓ\}}|	|
-ft	|ѓ|€ d
- | d |||€ d
- | d |€ ||dњ	€|	|
-f< qj€  Ў D ]}€|||ѓ q·d S t € t
-ѓrФ€ D ]}€|||ѓ qЙd S d S )NrD   r  r6  rL   c                 3   s   | ]}€ |u V  qd S )N) )ъ.0rЄ   )ъn) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z+maker_info.<locals>.walk.<locals>.<genexpr>[  s,   +G +G 78 ,- 12 ,2 +G +G +G +G +G c                 s   s&   | ]\}}t |d  ѓdkr|V  qdS )r  i   N)r   )ъ.0r©   ъf) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z+maker_info.<locals>.walk.<locals>.<genexpr>\  sL   P P  $  ! #$ <? @A BH @I <J NO <O P  P P P P P i   c                    s    g | ]\}}|€ d  kr|‘qS )i   ) )ъ.0rА   rЄ   )ъoi) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z,maker_info.<locals>.walk.<locals>.<listcomp>_  s@   > > > !% !" $% 23 79 <= 7= 2= >  > > > iяяяяrR   rS   r>   r  r   )	ЪatrЃ   Ъprotoъproto_indexъupvals_indexЪpf_keyЪmakerЪvmъstmt)r<   r=   rG   r   r   r  r@  rЈ   rA  rJ   r2   r"  r>   r@   )
-ъnr$  ъstmtsrD  ъcloъstrB   r‰   rї   ъl2ъc2Ъpiъui)ъ
-disp_nodesъoutr?   )ъnъoiъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyr?   zmaker_info.<locals>.walkT  sU      	&    
-  & & 
-$ "# !$ $   
-2 - #, - 
-2 #$ &) */ &0 "1 !2 2   # # 
-`(+ +G +G +G +G <F +G +G (G 
-`	 	P 	P 	(1 	27 	(8 	P 	P 	P 	 
- 
- 
- 
-  
-!& 
-' 
-' 
-`  !# &' !' (  > > > > ). > >  
-$& 
-0 
- 
- 
-  
-0 
-,0 
-  `! "( ) -< < `%( )+ ,2 )3 57 8@ 5A %B ``!   !  ! %(  ( `
--7 89 -: `
-03 46 07 !- !" $% ') +- %' )+ $, 47 $7 !`.; <A BD <E .F %+ %' )+ =? AC <D MW XY MZ ?D EG ?H IO ?P QS ?T U[ ?\ EG Y[ @E FH @I JP @Q RT @U V\ @] ?D EG ?H PS ]_ 5`5`%( *, .0 )1 %2       
-&
-&     % & & & 
-&
-&    ! 	& 
-&
-&     % & & & 
-&
-&	&	&Ъcaptures)rf   r>   Ъ	_capturesr@   )r   Ъinfo) )ъ
-disp_nodesъoutr?   ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ
-maker_infor}  K  sЁ   = = &6 7; &< = =  
-  
-&
-&
-&
-&
-&
-&
-&)	 )
- ) ) ) ) * * * *+*+*	
- +% +&* ++ +	
- + +	 +	 , , , , , , c                   sш   | d ‰ i }t € ѓD ]
-\}}|||d < q
-i ‰i ‰tѓ ‰‡‡‡‡fd„‰€| d ѓ d„ | Ў D ѓ}|r>t|‡ ‡fd„dЌnd‰€ € € d	 Ўs`d‰‡ ‡fd
-„|D ѓ}|r`t|‡ ‡fd„dЌ‰t‡ ‡‡fd„| Ў D ѓѓ}|rt|d
- n€d }€|fS )б­  (proto parameter index, upvalue-list parameter index) of a closure maker.
-    Layouts differ: function(e, proto, upvals) or, with repeated names,
-    function(g, d, d, d, d, j) where the proto is the last one. The proto is
-    the parameter indexed through itself (P[P[k]]: its fields are keyed by
-    its own entries); the upvalue list is the first other parameter the body
-    uses (only the last of repeated names is visible).r  r   c                    sN  t | tѓr•|  dЎdkr€ | d d Ў |  dЎdkr]| d  dЎdkr]| d  dЎdkr]| d d  dЎdkr]| d d d d | d d d kr]| d d d }€  |dЎd	 € |< |  dЎdkr€| d  dЎdkr€| d  dЎd
-kr€| d d d }€ |dЎd	 €|< |  Ў D ]}€|ѓ qЊd S t | tѓrҐ| D ]}€|ѓ qњd S d S )NrD   rE   rF   r$   rT   rH   rU   i    i   r}   )r<   r=   rG   Ъaddr>   r@   )ъnr   rB   )ъcountsъkcountsЪusedъvisit) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyzvisitz_maker_params.<locals>.visit€  sњ      	    !/ / 
-1 1  # $ %/ 0 1 1     !3 3 
-189 :@ 8A 8M FL 8M Q_ 8_ 
-1 " # / (. / 3E E 
-1 " # $* + 7 06 7 ;I I 
-1 " # $* + ,3 4 5? @ DE FL DM NU DV Wa Db b 
-1	 	 	 	& 	' 	(2 	3 	 
-# 
-- 
-() 
-+, 
-- 
-01 
-1 
- 
- 
-     !3 3 
-389 :@ 8A 8M FL 8M Q_ 8_ 
-3 " # / (. / 3J J 
-3
- 
- 
- 
-& 
-' 
-(2 
-3 
- % / *+ -. / 23 3         
-
-      
-
-    ! 	 
-
-      
-
-		rP   c                 S   s   g | ]}|d kr|‘qS )i    ) )ъ.0r©   ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z!_maker_params.<locals>.<listcomp>њ  s0   
-3 
-3 
-3  -. 12 -2 
-3  
-3 
-3 
-3 c                    s   €  € |  d dЎ| dkfS )Nr$   i    i   )rG   )r©   )r  ъcounts) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z_maker_params.<locals>.<lambda>ќ  s8   $* $F /3 45 /6 7A /B DE $F HI MN HN #O #O )r“   i   r$   c                    s"   g | ]
-}€  € | d  Ўr|‘qS )r$   )rG   )ъ.0r©   )r  ъkcounts) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz
-<listcomp>z!_maker_params.<locals>.<listcomp>Ў  sD   D D D  #* #C /3 45 /6 7A /B #C D  D D D c                    s   €€ |  d  S )Nr$   ) )r©   )r  ъkcounts) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<lambda>z_maker_params.<locals>.<lambda>Ј  s    (/ 04 56 07 8B 0C (D (D c                 3   s.   | ]}|d €fvr€ | d €v r|V  qdS )i    r$   N) )ъ.0r©   )r  rp  rѓ  ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z _maker_params.<locals>.<genexpr>¤  s\   e e  45 >? AC =D 4D e IM NO IP Q[ I\ `d Id e  e e e e e i    )rЈ   rҐ   r>   r@  rG   r¦   )rg  ъvisibler©   ъaъcandsъkcъothersъui) )r  ъcountsъkcountsrp  rѓ  ъvisitъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyr"  r"  y  sр     	 	 	 
- 
- 
-  
-
-
-	
- 
-	
- 
-
-  	    	 	   
- 
-   	 #
- # # # # # $
-3 $
-3 $  $) $) $
-3 $
-3 $
- %TY %
-` %
-
- % %O %O %O %O %O %
-P %
-P %
-` %_` % & &, & & & & * &+ &, &E' '	 )D )D )D )D )D ) )D )D )	 * *	E+ + +D +D +D +D +D +E +E +
- , ,e ,e ,e ,e ,e ,e , ' , 0 , 0 ,e ,e ,e , - -
-) -
- - -
- -
-) -#% -() -#) - . . . . c                   s@   i ‰‡ ‡‡fd„‰€ d D ]
-}|d €t |ѓ< q
-€€ d ѓ €S )ъfDeclaration keys of locals declared directly in fn (params and body,
-    not inside nested functions).c                    sш   t | tѓrj|  dЎ}|dkr| € urd S |dkr(| d D ]
-}|d €t|ѓ< qn5|dkr9| d d €t| d ѓ< n$|dv rJ| d d €t| d ѓ< n|d	kr]| d D ]
-}|d €t|ѓ< qR|  Ў D ]}€|ѓ qad S t | tѓrz| D ]}€|ѓ qqd S d S )
-NrD   r  rQ   rS   r   ЪAstStatLocalFunction)Ъ
-AstStatForrЃ   ЪAstStatForIn)r<   r=   rG   rU  r>   r@   )ъnrD  rB   )ъfnЪkeysъvisit) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyzvisitz_decls_in.<locals>.visit®  sр      	    
-  & & 
-+, 46 +6 
-   # # 
-2	 " # 22 )* +1 )2  " #$ % & & 2	 	- 	- 	
-2
--. 
-/5 
--6 
-7= 
--> 
- 
- 
-  
-!' 
-( 
-) 
-* 
-*  & & 
-2,- .3 ,4 5; ,<     !& ' ( ) ) 
- 
-% 
-% 
-
-2 " # 22 )* +1 )2  " #$ % & &      
-
-      
-
-    ! 	 
-
-      
-
-		r  r   rP   )rU  )ъfnъa) )ъfnrЎ  ъvisitъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyЪ	_decls_inr©  ©  sЂ    	    &&	
-  % & 	
-    	 	 
- 
-       c                    s    t | d ѓ‰i ‰‡‡‡fd„‰€| d ѓ i }€ Ў D ]
-\}}| |g Ў |Ў qd„ | Ў D ѓ‰i ‰ € Ў D ]
-\}}€  |g Ў |Ў q7t‡ ‡fd„|D ѓѓS )Nrg  c                    sv   t | tѓr)|  dЎdkrt| d ѓ}|€ v r€ | €|< |  Ў D ]}€|ѓ q d S t | tѓr9| D ]}€|ѓ q0d S d S )NrD   rE   rF   )r<   r=   rG   rU  r>   r@   )ъnr   rB   )ъmaker_declsrѓ  ъvisit) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyzvisitz_captures.<locals>.visitМ  sм       		    !/ / 
--   ' ( )   $ $ -* +, -         
-
-      
-
-	 	 	  	! 		
- 
-
-
-
-
-      
-
-
-
-				rh  c                 S   s    h | ]\}}t |ѓd kr|’qS )i   )r   )ъ.0ъnmъks) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<setcomp>z_captures.<locals>.<setcomp>Ь  s@   : : :    .1 24 .5 89 .9 :  : : : c                 3   s*   | ]}|€vrt € | ѓd kr|V  qdS )i   N)r   )ъ.0ъnm)Ъby_nameЪdup) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz	<genexpr>z_captures.<locals>.<genexpr>а  sT   Q Q  )+ 36 )6 Q ;> ?F GI ?J ;K OP ;P Q  Q Q Q Q Q )r©  rµ   rЋ   r\   r¦   )ry  Ъnamesr   r   ъnm) )rґ  rµ  ъmaker_declsrѓ  ъvisitъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyrx  rx  И  s@   ! ") * +   	 
-
-
-
-
-
-
-
-      
- 
-      --	 	
-  	 	#   " 	# 	- +, 	- 	- 	- : : " * * : :     % % --	 	
-  	 	#   " 	# 	- +, 	- 	- 	-  Q Q Q Q Q  % Q Q Q Q )$Ъ__doc__r   r   r   rџ   r
-   ЪdirnameЪabspathЪ__file__ЪHEREr   r#   r2   r;   r?   rJ   rf   r~   r   r„   r‹   r•   rЇ   Ъ__name__rВ   rе   rк   rь   r  r2  rR  rU  r}  r"  r©  rx  ) ) ) ъIC:\Users\tobi4\Downloads\Decompiler\deobf\obfuscators\luraph_v15\vmmap.pyz<module>z<module>   sf      
- 
- 
- 
- 	 	 	 	 
- 
- 
- 
- 
-  2   1 (0 1 2  
-
- 
- 
-. 
- 
- 
-- 
-(, 
-- 
-. 
- 555"""***444:#:#:#`' `' `6I `6I a' a' a6I a6I b( b( b7J b7J `K`K` c! c0; cJU d! d0; dJU cVcVc g
-g
-g
-tttЌ%( Ќ%( Ќ%( Ќ%( 888¬ ¬ ¬ ¬­	 ­ ­ °=A °=A °=A °=A ИCF ИCF ИCF ИCF а;а;а;ееецuцuцu‰;‰;‰;ЈC ЈC ЈC ЖЖЖЛ+Л+Л+щ-щ-щ-©©©ИQИQИQИQИQ
